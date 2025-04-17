@@ -16,7 +16,7 @@ class Linear(BaseLayer):
     def forward(self, input_x: np.ndarray):
         # TODO: Implement forward pass through a single linear layer, similar to the linear regression output
         # Output = dot product between W and X and then add the bias
-        # output =
+        output = input_x @ self.w + self.b  
         # Store the arrays in cache, useful for calculating the gradients in the backward pass
         self.cache = [input_x.copy(), self.w.copy(), self.b.copy()]
         return output
@@ -27,10 +27,10 @@ class Linear(BaseLayer):
         temp_x, temp_w, _ = self.cache
 
         # Calculate dx
-        # dx =
+        dx = dout @ temp_w.T # (N, D_in)
         # Calculate dw and db
-        # self.dw =
-        # self.db =
+        self.dw = temp_x.T @ dout # (D_in, D_out)
+        self.db = dout.sum(axis=0) # (D_out,)
         # Return gradient for passing to the next layers
         return dx
 
